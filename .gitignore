@@ -1,0 +1,33 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# Environment variables
+.env
+.env.*
+*.log
+
+# Database files
+*.sqlite3
+*.db
+
+# FastAPI specific
+# If you are using a specific build directory for your frontend assets, add it here
+# For example:
+# frontend/dist/
+
+# Other common files to ignore
+temp/
+tmp/
