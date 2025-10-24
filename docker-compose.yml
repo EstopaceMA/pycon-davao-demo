@@ -1,34 +1,13 @@
 services:
-  db:
-    image: postgres:15-alpine
-    container_name: pycon_db
-    environment:
-      POSTGRES_USER: pycon_user
-      POSTGRES_PASSWORD: pycon_password
-      POSTGRES_DB: pycon_db
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pycon_user -d pycon_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   web:
     build: .
     container_name: pycon_web
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://pycon_user:pycon_password@db:5432/pycon_db
-    depends_on:
-      db:
-        condition: service_healthy
+      # Use Supabase connection string from .env file
+      # Create a .env file with: DATABASE_URL=your-supabase-connection-string
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@host.docker.internal:5432/postgres}
     volumes:
       - ./app:/app/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-
-volumes:
-  postgres_data:
