@@ -158,54 +158,51 @@ def read_member(member_id: int, db: Session = Depends(get_db)):
     return db_member
 
 
-# @app.put(
-#     "/members/{member_id}",
-#     response_model=schemas.MemberResponse,
-#     tags=["Members"],
-#     summary="Update a member",
-#     response_description="Updated member details"
-# )
-# def update_member(
-#     member_id: int,
-#     member: schemas.MemberUpdate,
-#     db: Session = Depends(get_db)
-# ):
-#     """
-#     ## Update a PyCon member
+@app.put(
+    "/members/{member_id}",
+    response_model=schemas.MemberResponse,
+    tags=["Members"],
+    summary="Update a member",
+    response_description="Updated member details",
+)
+def update_member(
+    member_id: int, member: schemas.MemberUpdate, db: Session = Depends(get_db)
+):
+    """
+    ## Update a PyCon member
 
-#     Update one or more fields of an existing member. All fields are optional.
+    Update one or more fields of an existing member. All fields are optional.
 
-#     ### Parameters:
-#     - **member_id**: The unique ID of the member to update
+    ### Parameters:
+    - **member_id**: The unique ID of the member to update
 
-#     ### Request Body (all fields optional):
-#     - **first_name**: New first name
-#     - **last_name**: New last name
-#     - **email**: New email address
-#     - **membership_type**: New membership type
-#     - **is_active**: New active status
+    ### Request Body (all fields optional):
+    - **first_name**: New first name
+    - **last_name**: New last name
+    - **email**: New email address
+    - **membership_type**: New membership type
+    - **is_active**: New active status
 
-#     ### Example Request:
-#     ```json
-#     {
-#         "membership_type": "speaker",
-#         "is_active": true
-#     }
-#     ```
+    ### Example Request:
+    ```json
+    {
+        "membership_type": "speaker",
+        "is_active": true
+    }
+    ```
 
-#     ### Returns:
-#     The updated member with modified `updated_at` timestamp.
+    ### Returns:
+    The updated member with modified `updated_at` timestamp.
 
-#     ### Errors:
-#     - **404**: Member not found
-#     """
-#     db_member = crud.update_member(db, member_id=member_id, member_update=member)
-#     if db_member is None:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND,
-#             detail="Member not found"
-#         )
-#     return db_member
+    ### Errors:
+    - **404**: Member not found
+    """
+    db_member = crud.update_member(db, member_id=member_id, member_update=member)
+    if db_member is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Member not found"
+        )
+    return db_member
 
 
 @app.delete(
