@@ -203,33 +203,3 @@ def update_member(
             status_code=status.HTTP_404_NOT_FOUND, detail="Member not found"
         )
     return db_member
-
-
-@app.delete(
-    "/members/{member_id}",
-    status_code=status.HTTP_204_NO_CONTENT,
-    tags=["Members"],
-    summary="Delete a member",
-    response_description="No content",
-)
-def delete_member(member_id: int, db: Session = Depends(get_db)):
-    """
-    ## Delete a PyCon member
-
-    Permanently remove a member from the database.
-
-    ### Parameters:
-    - **member_id**: The unique ID of the member to delete
-
-    ### Returns:
-    No content (204 status code) on successful deletion.
-
-    ### Errors:
-    - **404**: Member not found
-    """
-    success = crud.delete_member(db, member_id=member_id)
-    if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Member not found"
-        )
-    return None
